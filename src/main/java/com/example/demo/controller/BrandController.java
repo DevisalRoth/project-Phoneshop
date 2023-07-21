@@ -21,7 +21,7 @@ public class BrandController {
 //    @RequestMapping(method = RequestMethod.POST)
     @PostMapping
     public ResponseEntity<?> create(@RequestBody BrandDTO brandDTO){
-     Brand brand = Mapper.toEntity(brandDTO);
+     Brand brand = Mapper.toBrand(brandDTO);
      brand = brandService.createBrand(brand);
      return ResponseEntity.ok(Mapper.brandDTO(brand));
     }
@@ -38,10 +38,9 @@ public class BrandController {
         return ResponseEntity.ok(brands);
     }
     @PutMapping("{id}")
-    public ResponseEntity<Brand> update(@PathVariable("id") Integer id , @RequestBody BrandDTO brandDTO){
-        Brand updateBrand = Mapper.toEntity(brandDTO);
-        brandService.updateBrand(id, updateBrand);
-        return ResponseEntity.ok(updateBrand);
-
+    public ResponseEntity<?> update(@PathVariable("id") Integer id , @RequestBody BrandDTO brandDTO){
+        Brand updateBrand = Mapper.toBrand(brandDTO);
+        Brand updatedBrand = brandService.updateBrand(id, updateBrand);
+        return ResponseEntity.ok(Mapper.brandDTO(updatedBrand));
     }
 }
